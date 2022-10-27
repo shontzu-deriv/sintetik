@@ -21,8 +21,8 @@ let val;
 io.on("connection", (socket) => {
   setInterval(function () {
     val = Math.floor((Math.random() * 100) + 1);
-    console.log(val);
     socket.emit("hello", val);
+    console.log(val);
   }, 1000);
 
 });

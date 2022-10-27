@@ -11,19 +11,23 @@ function App() {
   const [password, setPassword] = useState("");
   const [index, setIndex] = useState("Vol50");
   const [authenticate, setAuthenticate] = useState(false);
- 
-  useEffect(() => {
-    socket.on("hello", (arg) => {
-      console.log(arg); // world
-    });
-  }, []);
+  const [val, setVal] = useState("");
+  const [valArray, setValArray] = useState([]);
 
-  function Login(){
+  useEffect(() => {
+    socket.on("hello", (val) => {
+      console.log(val);
+      setVal(val);
+      setValArray((valArray) => [...valArray, val]);
+    });
+  });
+
+  function Login() {
     setIndex("Volatility 50");
     if (username !== "" && password !== "") {
       setAuthenticate(true);
     }
-  };
+  }
 
   return (
     <div className="App">
@@ -45,6 +49,7 @@ function App() {
             }}
           />
           <button onClick={Login}>Login</button>
+          <h1>{val}</h1>
         </div>
       ) : (
         <Chart socket={socket} username={username} index={index} />
