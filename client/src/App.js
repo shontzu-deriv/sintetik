@@ -1,45 +1,46 @@
 import "./App.css";
 import io from "socket.io-client";
 import { useState } from "react";
-import Chat from "./Chat";
+import Chart from "./Chart";
 
 const socket = io.connect("http://localhost:3001");
 
 function App() {
   const [username, setUsername] = useState("");
-  const [room, setRoom] = useState("");
-  const [showChat, setShowChat] = useState(false);
+  const [password, setPassword] = useState("");
+  const [index, setIndex] = useState("Vol50");
+  const [authenticate, setAuthenticate] = useState(false);
 
-  const joinRoom = () => {
-    if (username !== "" && room !== "") {
-      socket.emit("join_room", room);
-      setShowChat(true);
+  function Login(){
+    setIndex("Volatility 50");
+    if (username !== "" && password !== "") {
+      setAuthenticate(true);
     }
   };
 
   return (
     <div className="App">
-      {!showChat ? (
+      {!authenticate ? (
         <div className="joinChatContainer">
-          <h3>Join A Chat</h3>
+          <h3>Login</h3>
           <input
             type="text"
-            placeholder="John..."
+            placeholder="setUsername"
             onChange={(event) => {
               setUsername(event.target.value);
             }}
           />
           <input
-            type="text"
-            placeholder="Room ID..."
+            type="password"
+            placeholder="setPassword"
             onChange={(event) => {
-              setRoom(event.target.value);
+              setPassword(event.target.value);
             }}
           />
-          <button onClick={joinRoom}>Join A Room</button>
+          <button onClick={Login}>Login</button>
         </div>
       ) : (
-        <Chat socket={socket} username={username} room={room} />
+        <Chart socket={socket} username={username} index={index} />
       )}
     </div>
   );
