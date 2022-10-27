@@ -14,33 +14,16 @@ const io = new Server(server, {
   },
 });
 
+
+let val;
+
+
 io.on("connection", (socket) => {
-  console.log(`User Connected: ${socket.id}`);
-  let num ;
-
-  socket.emit("hello", ()=>{
-
-      for(i=0; i<10; i++) {
-        return num = Math.random()*10;
-      }
-
-  });
-  
-  // socket.on("connect", () => {
-  // });
-
-  // socket.on("join_room", (data) => {
-  //   socket.join(data);
-  //   console.log(`User with ID: ${socket.id} joined room: ${data}`);
-  // });
-
-  // socket.on("send_message", (data) => {
-  //   socket.to(data.room).emit("receive_message", data);
-  // });
-
-  // socket.on("disconnect", () => {
-  //   console.log("User Disconnected", socket.id);
-  // });
+  setInterval(function () {
+    val = Math.floor((Math.random() * 100) + 1);
+    console.log(val);
+    socket.emit("hello", val);
+  }, 1000);
 
 });
 
