@@ -16,11 +16,18 @@ const io = new Server(server, {
 
 io.on("connection", (socket) => {
   console.log(`User Connected: ${socket.id}`);
-  socket.emit("hello", "world");
-  
-  socket.on("connect", () => {
-    socket.emit("hello", "world");
+  let num ;
+
+  socket.emit("hello", ()=>{
+
+      for(i=0; i<10; i++) {
+        return num = Math.random()*10;
+      }
+
   });
+  
+  // socket.on("connect", () => {
+  // });
 
   // socket.on("join_room", (data) => {
   //   socket.join(data);

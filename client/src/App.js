@@ -2,6 +2,7 @@ import "./App.css";
 import io from "socket.io-client";
 import { useState } from "react";
 import Chart from "./Chart";
+import React, { useEffect } from "react";
 
 const socket = io.connect("http://localhost:3001");
 
@@ -10,6 +11,12 @@ function App() {
   const [password, setPassword] = useState("");
   const [index, setIndex] = useState("Vol50");
   const [authenticate, setAuthenticate] = useState(false);
+ 
+  useEffect(() => {
+    socket.on("hello", (arg) => {
+      console.log(arg); // world
+    });
+  }, []);
 
   function Login(){
     setIndex("Volatility 50");
