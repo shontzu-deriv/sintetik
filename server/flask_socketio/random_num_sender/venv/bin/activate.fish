@@ -29,7 +29,7 @@ end
 # unset irrelevant variables
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/home/goh/Desktop/flask_socketio/random_num_sender/venv"
+set -gx VIRTUAL_ENV "/home/goh/Desktop/DRC2/sintetik/server/flask_socketio/random_num_sender/venv"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH
