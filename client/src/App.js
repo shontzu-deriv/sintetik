@@ -1,8 +1,9 @@
 import "./App.css";
 import io from "socket.io-client";
-import { useState } from "react";
 import Chart from "./Chart";
-import React, { useEffect } from "react";
+import Child from "./components/child.tsx";
+import React, { useState, useEffect } from "react";
+import { UserStore } from "./store/user";
 
 const socket = io.connect("http://localhost:3001");
 
@@ -12,13 +13,15 @@ function App() {
   const [index, setIndex] = useState("Vol50");
   const [authenticate, setAuthenticate] = useState(false);
   const [val, setVal] = useState("");
-  const [valArray, setValArray] = useState([]);
+  const [tick, setTick] = useState("");
+  const [data, setData] = useState([]);
 
   useEffect(() => {
-    socket.on("hello", (val) => {
-      console.log(val);
-      setVal(val);
-      setValArray((valArray) => [...valArray, val]);
+    socket.on("hello", (obj) => {
+      setVal(obj.val);
+      setTick(obj.tick);
+      setData(currentData => [...currentData, val]);
+      console.log(data);
     });
   });
 
@@ -32,27 +35,28 @@ function App() {
   return (
     <div className="App">
       {!authenticate ? (
-        <div className="joinChatContainer">
-          <h3>Login</h3>
-          <input
-            type="text"
-            placeholder="setUsername"
-            onChange={(event) => {
-              setUsername(event.target.value);
-            }}
-          />
-          <input
-            type="password"
-            placeholder="setPassword"
-            onChange={(event) => {
-              setPassword(event.target.value);
-            }}
-          />
-          <button onClick={Login}>Login</button>
-          <h1>{val}</h1>
-        </div>
+        // <div className="joinChatContainer">
+        //   <h3>Login</h3>
+        //   <input
+        //     type="text"
+        //     placeholder="setUsername"
+        //     onChange={(event) => {
+        //       setUsername(event.target.value);
+        //     }}
+        //   />
+        //   <input
+        //     type="password"
+        //     placeholder="setPassword"
+        //     onChange={(event) => {
+        //       setPassword(event.target.value);
+        //     }}
+        //   />
+        //   <button onClick={Login}>Login</button>
+        //   <h1>{tick}:{val}</h1>
+        // </div>
+        <Child userStore={UserStore}/>
       ) : (
-        <Chart socket={socket} username={username} index={index} />
+        <Chart socket={socket} username={username} index={index} val={val} tick={tick} data={data}/>
       )}
     </div>
   );

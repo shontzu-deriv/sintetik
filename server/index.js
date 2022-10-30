@@ -16,13 +16,17 @@ const io = new Server(server, {
 
 
 let val;
-
+let tick =0;
 
 io.on("connection", (socket) => {
   setInterval(function () {
     val = Math.floor((Math.random() * 100) + 1);
-    socket.emit("hello", val);
-    console.log(val);
+    // socket.emit("hello", val);
+    socket.emit('hello', {
+      tick: tick++,
+      val: val
+    });
+    console.log(`tick: ${tick}  val: ${val}`);
   }, 1000);
 
 });
